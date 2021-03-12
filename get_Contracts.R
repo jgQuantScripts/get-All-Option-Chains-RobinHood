@@ -43,7 +43,7 @@ exp <- unique(exp$expiration_date)
 exp[order(exp)]
 }
 
-get_historicals_options = function(RH, chain_symbol,expiration,type){
+get_rh_options = function(RH, chain_symbol,expiration,type){
 
   # URL and token
   url = paste0("https://api.robinhood.com/options/instruments/",
@@ -130,8 +130,8 @@ chain_symbol = "EEM"
 exp = get_expirations(RH, chain_symbol = chain_symbol)
 
 ops = pblapply(as.list(exp), function(expiration){
-calls = get_historicals_options(RH, chain_symbol = chain_symbol, expiration = expiration, type ="call")
-puts  = get_historicals_options(RH, chain_symbol = chain_symbol, expiration = expiration, type ="put")
+calls = get_rh_options(RH, chain_symbol = chain_symbol, expiration = expiration, type ="call")
+puts  = get_rh_options(RH, chain_symbol = chain_symbol, expiration = expiration, type ="put")
 rbind(calls,puts)
 })
 ops = rbindlist(ops,use.names = TRUE,fill = TRUE)
